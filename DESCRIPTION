@@ -1,0 +1,17 @@
+Package: sampler
+Type: Package
+Title: Aggregated and overdispersed sampling
+Version: 0.1.0
+Author: Bruno Vilela
+Maintainer: Bruno Vilela <bvilela@wustl.edu>
+Description: Generate aggregated or overdispersed sampling designs for any given phylogenetic tree, spatial points or distance matrix. Results can be used to design experiments/samples, for resample proposes and data bias removal.
+License: GPL-2
+Encoding: UTF-8
+Imports:
+    fields,
+    sp,
+    ape
+Depends:
+    R (>= 3.4),
+LazyData: true
+RoxygenNote: 6.0.1
