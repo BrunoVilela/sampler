@@ -4,7 +4,8 @@
 \alias{run_sampler}
 \title{Aggregated and overdispersed sampling}
 \usage{
-run_sampler(x, n, alpha)
+run_sampler(x, n, alpha, n_start = 1, return_start = FALSE,
+  starting = NULL)
 }
 \arguments{
 \item{x}{\code{matrix} indicating the distance (any unit) between sample units.
@@ -14,6 +15,13 @@ Row and column names should be given.}
 
 \item{alpha}{Number indicating the strenght of aggregation (if negative) or
 overdispersion (if positive). When alpha = 0 sample is random.}
+
+\item{n_start}{Number of initial selected points. Default is one starting point.}
+
+\item{return_start}{if \code{TRUE} the starting point is returned.}
+
+\item{starting}{Character vector indicating the starting point. If not provided
+random starting value(s) is(are) selected.}
 }
 \description{
 Generate aggregated or overdispersed sampling designs
@@ -22,7 +30,7 @@ be used to design experiments/samples, for resample proposes and data bias remov
 }
 \details{
 \code{run_sampler} resample \code{n} sample units with an attraction
-or repulsive effect determined by \code{alpha} and given a disatance matrix
+or repulsive effect determined by \code{alpha} and given a distance matrix
 (\code{x}). The algorithim begins selecting one random starting point \code{i}.
 The following sample unit is then selected based on the a probability given
 by the distance of \code{i} to each remaing units raised to the power of
@@ -35,21 +43,99 @@ negative values will generate an aggregated design. Note that as \code{alpha}
 approximate the infinity (+ or -), the sample design becomes more deterministic.
 }
 \examples{
-# Generate a random tree
+# Phylogeny example:
+## Generate a random tree
 require(ape)
-set.seed(2)
 tree <- rcoal(10)
-# Calculate the distance
+## Calculate the distance
 dist <- cophenetic(tree)
-# Highly overdispersed 50\% resample design (alpha = 100)
-selection <- run_sampler(x = dist, n = 5, alpha = 1000)
-# Prune tree
-overdispersed <- drop.tip(tree, tree$tip.label[!tree$tip.label \%in\% selection])
-# Plot to compare
-par(mfrow = c(1, 2))
-plot(tree)
-plot(overdispersed)
+## Highly overdispersed 50\% resample design (alpha = 50)
+selection <- run_sampler(x = dist, n = 5, alpha = 100, starting = "t10")
+## Highly aggregated 50\% resample design (alpha = -100)
+selection2 <- run_sampler(x = dist, n = 5, alpha = -100, starting = "t10")
+## Random 50\% resample design (alpha = 0)
+selection3 <- run_sampler(x = dist, n = 5, alpha = 0, starting = "t10")
+## Plot to compare
+par(mfrow = c(1, 3))
+plot(tree,tip.color=ifelse(tree$tip.label \%in\% selection, "red","black"),
+ main = "Overdispersed 50\% sampling (red were selected)", cex = 1)
+ axis(1)
+plot(tree,tip.color=ifelse(tree$tip.label \%in\% selection2, "blue","black"),
+main = "Aggregated 50\% sampling (blue were selected)", cex = 1)
+axis(1)
+plot(tree,tip.color=ifelse(tree$tip.label \%in\% selection3, "green","black"),
+main = "Random 50\% sampling (green were selected)", cex = 1)
+axis(1)
 
+# Geography example
+require(sp)
+require(maptools)
+data(wrld_simpl)  # World map
+Brazil <- wrld_simpl[wrld_simpl$NAME == "Brazil", ]  # Brazil (polygon)
+coords <- slot(spsample(Brazil, 100, "regular"), "coords")
+rownames(coords) <- paste0("t", 1:nrow(coords))
+## Calculate the geographic distance
+dist.geo <- rdist.earth(coords)
+## Subsample 50\%
+### Overdispersed
+selection.geo <- run_sampler(x = dist.geo, n = 25, alpha = 100, starting = "t10")
+### Aggregated
+selection.geo2 <- run_sampler(x = dist.geo, n = 25, alpha = -100, starting = "t10")
+### Random
+selection.geo3 <- run_sampler(x = dist.geo, n = 25, alpha = 0, starting = "t10")
+
+## Plot
+par(mfrow = c(1, 3), mar = c(1, 1, 15, 1))
+plot(Brazil, main = "Overdispersed 50\% sampling (red were selected)")
+points(coords, cex = 2, pch = 19,
+col = ifelse(rownames(coords) \%in\% selection.geo, "red","gray"))
+plot(Brazil, main = "Aggregated 50\% sampling (blue were selected)")
+points(coords, cex = 2, pch = 19,
+col = ifelse(rownames(coords) \%in\% selection.geo2, "blue","gray"))
+plot(Brazil, main = "Random 50\% sampling (green were selected)")
+points(coords, cex = 2, pch = 19,
+col = ifelse(rownames(coords) \%in\% selection.geo3, "green","gray"))
+
+# Trait example
+## Fake body size
+set.seed <- 1
+body_size <- runif(1000)
+# Biased sample towards large species
+set.seed <- 1
+body_size_bias <- sample(body_size, 500, prob = body_size)
+par(mfrow = c(1, 3))
+hist(body_size, main = "Species body size distribution\\n(n = 1000)",  xlab = "Body size")
+hist(body_size_bias, main = "Biased samplig towards larger species\\n(n = 500)",
+xlab = "Body size")
+# Use sampler to reduce the bias
+dist_bs <- as.matrix(dist(body_size_bias))
+rownames(dist_bs) <- colnames(dist_bs) <- 1:length(body_size_bias)
+selection.bs <- run_sampler(x = dist_bs, n = 100, alpha = 100)
+hist(body_size_bias[as.numeric(selection.bs)],
+ main = "Overdispersed sampling of biased information \\n(n = 100)",
+ xlab = "Body size")
+
+
+# Real time simulation
+require(raster)
+par(mfrow = c(1, 1))
+r <- raster(res = 25)
+values(r) <- runif(ncell(r))
+plot(r)
+coords <- xyFromCell(r, 1:ncell(r))
+rownames(coords) <- 1:ncell(r)
+dist.geo <- as.matrix(dist(coords))
+startingI <- 1
+# Change alpha and see how it works
+for(i in 3:50) {
+selection.geo <- run_sampler(x = dist.geo, n = i, alpha = 100, starting = startingI)
+startingI <- as.numeric(selection.geo)
+r2 <- r
+values(r2)[as.numeric(selection.geo)] <- 1
+values(r2)[-as.numeric(selection.geo)] <- NA
+plot(r2, col = "gray")
+Sys.sleep(time = .2)
+}
 }
 \author{
 Bruno Vilela
