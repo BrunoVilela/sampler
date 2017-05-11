@@ -65,6 +65,7 @@
 #' # Geography example
 #' require(sp)
 #' require(maptools)
+#' require(fields)
 #' data(wrld_simpl)  # World map
 #' Brazil <- wrld_simpl[wrld_simpl$NAME == "Brazil", ]  # Brazil (polygon)
 #' coords <- slot(spsample(Brazil, 100, "regular"), "coords")
