@@ -16,7 +16,10 @@
 #' between tips. Row and column names should be given.
 #' Default uses \code{cophenetic} from \code{ape} package.
 #' Other examples include
-#'
+#' @param n_start Number of initial selected tips. Default is one starting tip.
+#' @param return_start if \code{TRUE} the starting tip is returned.
+#' @param starting Character vector indicating the starting tips. If not provided,
+#' random starting value(s) is(are) selected.
 #'
 #' @details \code{run_sampler} resample \code{n} sample tips with an attraction
 #' or repulsive effect determined by \code{alpha} (\code{x}).

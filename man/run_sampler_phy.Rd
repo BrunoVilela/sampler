@@ -21,6 +21,13 @@ a \code{matrix} indicating the pairwise distance
 between tips. Row and column names should be given.
 Default uses \code{cophenetic} from \code{ape} package.
 Other examples include}
+
+\item{n_start}{Number of initial selected tips. Default is one starting tip.}
+
+\item{return_start}{if \code{TRUE} the starting tip is returned.}
+
+\item{starting}{Character vector indicating the starting tips. If not provided,
+random starting value(s) is(are) selected.}
 }
 \description{
 Generate aggregated or overdispersed sampling designs

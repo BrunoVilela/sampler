@@ -125,10 +125,11 @@ plot(r)
 coords <- xyFromCell(r, 1:ncell(r))
 rownames(coords) <- 1:ncell(r)
 dist.geo <- as.matrix(dist(coords))
-startingI <- 1
+startingI <- c(1)
 # Change alpha and see how it works
-for(i in 3:50) {
-selection.geo <- run_sampler(x = dist.geo, n = i, alpha = 100, starting = startingI)
+for(i in (length(startingI)+1):30) {
+selection.geo <- run_sampler(x = dist.geo, n = i, alpha = 100,
+starting = startingI)
 startingI <- as.numeric(selection.geo)
 r2 <- r
 values(r2)[as.numeric(selection.geo)] <- 1
