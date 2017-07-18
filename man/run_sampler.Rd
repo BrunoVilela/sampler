@@ -23,6 +23,12 @@ overdispersion (if positive). When alpha = 0 sample is random.}
 \item{starting}{Character vector indicating the starting point. If not provided
 random starting value(s) is(are) selected.}
 }
+\value{
+The function returns a vector indicating the selected rows.
+If return_start is TRUE, a list is returned with the first element being the
+Sampling_selection - selected sampling units - and
+Starting_points - selected starting point(s).
+}
 \description{
 Generate aggregated or overdispersed sampling designs
 for any given distance matrix (class matrix). Results can
@@ -70,6 +76,7 @@ axis(1)
 # Geography example
 require(sp)
 require(maptools)
+require(fields)
 data(wrld_simpl)  # World map
 Brazil <- wrld_simpl[wrld_simpl$NAME == "Brazil", ]  # Brazil (polygon)
 coords <- slot(spsample(Brazil, 100, "regular"), "coords")

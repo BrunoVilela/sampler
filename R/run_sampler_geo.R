@@ -11,11 +11,12 @@
 #' @param n A positive integer number indicating the sample size.
 #' @param alpha Number indicating the strenght of aggregation (if negative) or
 #' overdispersion (if positive). When alpha = 0 sample is random.
+#' @param dist.func A distance function to calculate coordinates distance.
+#' Default is \code{fields::rdist.earth}.
 #' @param n_start Number of initial selected points. Default is one starting point.
 #' @param return_start if \code{TRUE} the starting point is returned.
 #' @param starting Character vector indicating the starting point (= to row names).
 #' If not provided, random starting value(s) is(are) selected.
-#'
 #'
 #' @details \code{run_sampler} resample \code{n} sample units with an attraction
 #' or repulsive effect determined by \code{alpha} and given a distance matrix
@@ -31,7 +32,7 @@
 #' approximate the infinity (+ or -), the sample design becomes more deterministic.
 #'
 #'
-#' @values The function returns a vector indicating the selected rows.
+#' @return The function returns a vector indicating the selected rows.
 #' If return_start is TRUE, a list is returned with the first element being the
 #' Sampling_selection - selected sampling units - and
 #' Starting_points - selected starting point(s).

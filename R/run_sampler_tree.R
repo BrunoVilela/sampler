@@ -35,7 +35,7 @@
 #' approximate the infinity (+ or -), the sample design becomes more deterministic.
 #'
 #'
-#' @values The function returns a prunned phylogenetic tree.
+#' @return The function returns a prunned phylogenetic tree.
 #'
 #' @examples
 #' # Generate a random tree
@@ -66,7 +66,7 @@ run_sampler_phy <- function (x, n, alpha, dist.func = cophenetic,
                              starting = NULL) {
   #
   if (class(x) != 'phylo') {
-    stop("x must be a phylogeny")
+    stop("x must be a phylogeny of class phylo")
   }
   if (class(dist.func) != "function") {
     stop("dist.func must be a function")

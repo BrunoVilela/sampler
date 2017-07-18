@@ -31,7 +31,7 @@
 #' approximate the infinity (+ or -), the sample design becomes more deterministic.
 #'
 #'
-#' @values The function returns a vector indicating the selected rows.
+#' @return The function returns a vector indicating the selected rows.
 #' If return_start is TRUE, a list is returned with the first element being the
 #' Sampling_selection - selected sampling units - and
 #' Starting_points - selected starting point(s).

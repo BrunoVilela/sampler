@@ -16,12 +16,21 @@ run_sampler_geo(x, n, alpha, dist.func = rdist.earth, n_start = 1,
 \item{alpha}{Number indicating the strenght of aggregation (if negative) or
 overdispersion (if positive). When alpha = 0 sample is random.}
 
+\item{dist.func}{A distance function to calculate coordinates distance.
+Default is \code{fields::rdist.earth}.}
+
 \item{n_start}{Number of initial selected points. Default is one starting point.}
 
 \item{return_start}{if \code{TRUE} the starting point is returned.}
 
 \item{starting}{Character vector indicating the starting point (= to row names).
 If not provided, random starting value(s) is(are) selected.}
+}
+\value{
+The function returns a vector indicating the selected rows.
+If return_start is TRUE, a list is returned with the first element being the
+Sampling_selection - selected sampling units - and
+Starting_points - selected starting point(s).
 }
 \description{
 Generate aggregated or overdispersed sampling designs

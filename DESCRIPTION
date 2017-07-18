@@ -10,7 +10,10 @@ Encoding: UTF-8
 Imports:
     fields,
     sp,
-    ape
+    ape,
+    phangorn,
+    picante,
+    maptools
 Depends:
     R (>= 3.4),
 LazyData: true

@@ -29,6 +29,9 @@ Other examples include}
 \item{starting}{Character vector indicating the starting tips. If not provided,
 random starting value(s) is(are) selected.}
 }
+\value{
+The function returns a prunned phylogenetic tree.
+}
 \description{
 Generate aggregated or overdispersed sampling designs
 for any given phylogenetic tree (class phylo). Results can
