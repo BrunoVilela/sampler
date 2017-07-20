@@ -10,7 +10,7 @@
 #'
 #'
 #' @details The algorithm selects n - 1 oldest nodes, defining n clades. One species
-#' from each clade is selected (Nee and May 1997).
+#' from each clade is randonly selected (Nee and May 1997).
 #'
 #'
 #' @return A prunned phylogenetic tree.
@@ -57,8 +57,10 @@ Nee_May_1997 <- function(x, n) {
   if (class(x) != 'phylo') {
     stop("x must be a phylogeny of class phylo")
   }
-  if (!is.numeric(n) | length(n) > 1 | n < 2) {
-    stop("n must be a positive integer of length one and bigger than 2")
+
+  if (!is.numeric(n) | length(n) > 1 | n < 2 | n > Ntip(x) | n != round(n)) {
+    stop("n must be a positive integer of length one, bigger than 2,
+         and smaller than the number of tips in the tree")
   }
 
   nodes <- 1:(Nnode(x) + Ntip(x))

@@ -14,6 +14,8 @@ Imports:
     phangorn,
     picante,
     maptools
+Suggests:
+    testthat
 Depends:
     R (>= 3.4),
 LazyData: true

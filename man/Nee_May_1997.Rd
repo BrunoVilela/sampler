@@ -20,7 +20,7 @@ the remaining amount of evolutionary history (see Nee and May 1997).
 }
 \details{
 The algorithm selects n - 1 oldest nodes, defining n clades. One species
-from each clade is selected (Nee and May 1997).
+from each clade is randonly selected (Nee and May 1997).
 }
 \examples{
 require(ape)

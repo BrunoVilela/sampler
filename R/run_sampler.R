@@ -149,6 +149,10 @@ run_sampler <- function (x, n, alpha, n_start = 1, return_start = FALSE,
     starter <- sample(1:n_row, n_start)
     first <- row_names_x[starter]
   } else {
+    if (length(starting) != n_start) {
+      warning("Length of starting and n_start are different,
+              setting n_start to be equal to length(starting)")
+    }
     n_start <- length(starting)
     if (n_start >= n) {
       stop('starting length should be smaller than n')
@@ -177,16 +181,19 @@ run_sampler <- function (x, n, alpha, n_start = 1, return_start = FALSE,
     for (i in start_loop:n) {
       positions <- row_names_x %in% selected
       dist_rela <- apply(x[positions, !positions], 2, min) ^ alpha
-      if (any(is.infinite(dist_rela))) {
+      if (any(is.infinite(dist_rela) | is.na(dist_rela))) {
         stop("alpha is too high, infinite values generated.")
       }
       prob1 <- dist_rela / sum(dist_rela)
       dist_rela2 <- apply(x[positions, !positions], 2, min) ^ alpha
-      if (any(is.infinite(dist_rela2))) {
+      if (any(is.infinite(dist_rela2)  | is.na(dist_rela))) {
         stop("alpha is too high, infinite values generated.")
       }
       prob2 <- dist_rela2 / sum(dist_rela2)
       prob <- (prob2 + prob1) / 2
+      if (any(is.na(prob))) {
+        stop("alpha is too high, try smaller values.")
+      }
       selected[i] <- sample(names(prob), 1, prob = prob)
     }
   }
@@ -220,9 +227,12 @@ run_sampler <- function (x, n, alpha, n_start = 1, return_start = FALSE,
     stop("n should have length 1")
   }
   if (n < 2) {
-    stop("n must be higher than 1")
+    stop("n must be 2 or high")
   }
-  if (n/n != 1) {
+  if (n > nrow(x)) {
+    stop("n should be equal or smaller than x")
+  }
+  if (n != round(n)) {
     stop("n must be an integer")
   }
   if (!is.numeric(alpha)) {
@@ -240,7 +250,7 @@ run_sampler <- function (x, n, alpha, n_start = 1, return_start = FALSE,
   if (n_start < 1) {
     stop("n_start must be a positive value equals or bigger than 1")
   }
-  if (n_start/n_start != 1) {
+  if (n_start != round(n_start)) {
     stop("n_start must be an integer")
   }
   if (!is.logical(return_start)){
@@ -248,6 +258,11 @@ run_sampler <- function (x, n, alpha, n_start = 1, return_start = FALSE,
   }
   if (n_start >= n) {
     stop("n_start should be smaller than n")
+  }
+  if (!any(is.null(starting))) {
+    if (any(!starting %in% colnames(x))) {
+      stop("starting was not found in x")
+    }
   }
   invisible(NULL)
 }
