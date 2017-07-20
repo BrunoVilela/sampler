@@ -24,6 +24,11 @@ test_that("test run_sampler_phy", {
     expect_equal(Ntip(selection), n)
     expect_true(any(selection$tip.label %in%  "t10"))
   }
-
+  selection <- run_sampler_phy(x = tree, n = n, alpha = 100, starting = "t10",
+                               return_start = TRUE)
+  expect_equal(class(selection[[1]]), "phylo")
+  expect_equal(Ntip(selection[[1]]), n)
+  expect_true(any(selection[[1]]$tip.label %in%  "t10"))
+  expect_true(all(selection[[2]] ==  "t10"))
 })
 
