@@ -13,9 +13,11 @@ Imports:
     ape,
     phangorn,
     picante,
-    maptools
+    maptools,
 Suggests:
-    testthat
+    testthat,
+    raster,
+    adephylo
 Depends:
     R (>= 3.4),
 LazyData: true

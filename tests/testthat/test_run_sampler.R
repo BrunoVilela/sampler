@@ -13,6 +13,11 @@ test_that("test run_sampler", {
   expect_equal(class(selection), "character")
   expect_equal(length(selection), n)
   expect_true(any(selection %in%  "t10"))
+
+  selection <- run_sampler(x = dist2, n = n, alpha = 100)
+  expect_equal(class(selection), "character")
+  expect_equal(length(selection), n)
+
   selection <- run_sampler(x = dist2, n = n, alpha = 100,
                            starting = c("t10", "t3"), n_start = 2)
   expect_equal(class(selection), "character")

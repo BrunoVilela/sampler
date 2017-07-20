@@ -50,7 +50,7 @@ main = "Random 50% sampling (green were selected)", cex = 1)
 axis(1)
 ```
 
-![](readme_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](figure/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 
 
@@ -146,7 +146,7 @@ points(coords, cex = 2, pch = 19,
 col = ifelse(rownames(coords) %in% selection.geo3, "green","gray"))
 ```
 
-![](readme_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](figure/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 
 Trait example:
@@ -171,7 +171,7 @@ hist(body_size_bias[as.numeric(selection.bs)],
  xlab = "Body size")
 ```
 
-![](readme_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![](figure/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 
 
