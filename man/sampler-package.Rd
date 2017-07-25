@@ -6,22 +6,22 @@
 \alias{sampler}
 \title{Aggregated and overdispersed sampling}
 \description{
-The sampler package is meant to Generate aggregated or overdispersed sampling
-designs for any given phylogenetic tree, spatial points or distance matrix.
-Results can be used to design experiments/samples, for resample proposes and
-data bias removal.
+The sampler package generates aggregated or overdispersed samples from any
+given phylogenetic tree, spatial points defined by two coordinates, or
+generic distance matrix. Resulting samples can remove data bias in existing
+datasets or help design sampling schemes for new experiments.
 }
 \details{
 The package includes 4 functions:
-\cr*\code{\link{run_sampler}}: Generate aggregated or overdispersed
-sampling designs for any given distance matrix.
-\cr*\code{\link{run_sampler_geo}}: Applies the run_sampler algorithm to
- geographic coordinates.
-\cr*\code{\link{run_sampler_phy}}: Applies the run_sampler algorithm to
- phylogenetic trees.
-\cr*\code{\link{Nee_May_1997}}: Generate a subsample from a phylogenetic
-tree that maximizes the remaining amount of evolutionary history
-(see Nee and May 1997).
+\cr*\code{\link{run_sampler}}: Generates aggregated (underdispersed) or
+overdispersed samples of values from any given distance matrix.
+\cr*\code{\link{run_sampler_geo}}: Generates aggregated (underdispersed) or
+overdispersed samples of points from any given set of geographic coordinates.
+\cr*\code{\link{run_sampler_phy}}: Generates aggregated (underdispersed) or
+overdispersed samples of tips from any given phylogenetic tree.
+\cr*\code{\link{Nee_May_1997}}: Generates a subsample of tips from a
+phylogenetic tree that maximize the remaining amount of evolutionary history
+ for each node (see Nee and May 1997).
 }
 \references{
 Sean Nee and Robert M. May. "Extinction and the loss of evolutionary history." Science 278.5338 (1997): 692-694.

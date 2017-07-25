@@ -12,14 +12,14 @@ run_sampler_phy(x, n, alpha, dist.func = cophenetic, n_start = 1,
 
 \item{n}{A positive integer number indicating the sample size.}
 
-\item{alpha}{Number indicating the strenght of aggregation (if negative) or
+\item{alpha}{Number indicating the strength of aggregation (if negative) or
 overdispersion (if positive). When alpha = 0 sample is random.}
 
 \item{dist.func}{Function to calculate the phylogenetic distance.
 The function should be able to receive a phylo object and return
 a \code{matrix} indicating the pairwise distance
 between tips. Row and column names should be given.
-Default uses \code{cophenetic} from \code{ape} package.
+Default uses \link{\code{cophenetic}} from \code{ape} package.
 Other examples include}
 
 \item{n_start}{Number of initial selected tips. Default is one starting tip.}
@@ -30,7 +30,7 @@ Other examples include}
 random starting value(s) is(are) selected.}
 }
 \value{
-The function returns a prunned phylogenetic tree.
+The function returns a pruned phylogenetic tree.
 }
 \description{
 Generate aggregated or overdispersed sampling designs
@@ -38,7 +38,7 @@ for any given phylogenetic tree (class phylo). Results can
 be used to design experiments/samples, for resample proposes and data bias removal.
 }
 \details{
-The function uses the algorithm in \link{run_sampler},
+The function uses the algorithm in \link{\code{run_sampler}},
  but here it accepts a phylo object as input.
 }
 \examples{

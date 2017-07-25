@@ -12,7 +12,7 @@ Nee_May_1997(x, n)
 \item{n}{A positive integer number indicating the sample size.}
 }
 \value{
-A prunned phylogenetic tree.
+A pruned phylogenetic tree.
 }
 \description{
 Generate a subsample from a phylogenetic tree that maximizes
@@ -20,7 +20,7 @@ the remaining amount of evolutionary history (see Nee and May 1997).
 }
 \details{
 The algorithm selects n - 1 oldest nodes, defining n clades. One species
-from each clade is randonly selected (Nee and May 1997).
+from each clade is randomly selected (Nee and May 1997).
 }
 \examples{
 require(ape)

@@ -13,7 +13,7 @@ run_sampler_geo(x, n, alpha, dist.func = rdist.earth, n_start = 1,
 
 \item{n}{A positive integer number indicating the sample size.}
 
-\item{alpha}{Number indicating the strenght of aggregation (if negative) or
+\item{alpha}{Number indicating the strength of aggregation (if negative) or
 overdispersion (if positive). When alpha = 0 sample is random.}
 
 \item{dist.func}{A distance function to calculate coordinates distance.
