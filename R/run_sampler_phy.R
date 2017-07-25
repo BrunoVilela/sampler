@@ -14,14 +14,14 @@
 #' The function should be able to receive a phylo object and return
 #' a \code{matrix} indicating the pairwise distance
 #' between tips. Row and column names should be given.
-#' Default uses \link{\code{cophenetic}} from \code{ape} package.
+#' Default uses \code{\link{cophenetic}} from \code{ape} package.
 #' Other examples include
 #' @param n_start Number of initial selected tips. Default is one starting tip.
 #' @param return_start if \code{TRUE} the starting tip is returned.
 #' @param starting Character vector indicating the starting tips. If not provided,
 #' random starting value(s) is(are) selected.
 #'
-#' @details The function uses the algorithm in \link{\code{run_sampler}},
+#' @details The function uses the algorithm in \code{\link{run_sampler}},
 #'  but here it accepts a phylo object as input.
 #'
 #' @return The function returns a pruned phylogenetic tree.

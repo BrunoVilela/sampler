@@ -17,7 +17,7 @@ run_sampler_geo(x, n, alpha, dist.func = rdist.earth, n_start = 1,
 overdispersion (if positive). When alpha = 0 sample is random.}
 
 \item{dist.func}{A distance function to calculate coordinates distance.
-Default is \code{fields::rdist.earth}.}
+Default is \code{\link{rdist.earth}} from package \code{fields}.}
 
 \item{n_start}{Number of initial selected points. Default is one starting point.}
 
@@ -38,7 +38,7 @@ for any given coordinates. Results can
 be used to design experiments/samples, for resample proposes and data bias removal.
 }
 \details{
-The function uses the algorithm in \link{run_sampler},
+The function uses the algorithm in \code{\link{run_sampler}},
  but here it accepts a two column matrix of coordinates as input.
 }
 \examples{

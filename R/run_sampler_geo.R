@@ -12,13 +12,13 @@
 #' @param alpha Number indicating the strength of aggregation (if negative) or
 #' overdispersion (if positive). When alpha = 0 sample is random.
 #' @param dist.func A distance function to calculate coordinates distance.
-#' Default is \code{fields::rdist.earth}.
+#' Default is \code{\link{rdist.earth}} from package \code{fields}.
 #' @param n_start Number of initial selected points. Default is one starting point.
 #' @param return_start if \code{TRUE} the starting point is returned.
 #' @param starting Character vector indicating the starting point (= to row names).
 #' If not provided, random starting value(s) is(are) selected.
 #'
-#' @details The function uses the algorithm in \link{run_sampler},
+#' @details The function uses the algorithm in \code{\link{run_sampler}},
 #'  but here it accepts a two column matrix of coordinates as input.
 #'
 #'
