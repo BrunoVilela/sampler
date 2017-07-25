@@ -1,0 +1,209 @@
+---
+title: "sampler package"
+author: "Bruno Vilela"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+The sampler package generates aggregated or overdispersed samples from any given phylogenetic tree, spatial points defined by two coordinates, or generic distance matrix. Resulting samples can remove data bias in existing datasets or help design sampling schemes for new experiments.
+  
+The package includes 4 functions: 
+
+* run_sampler: Generates aggregated (underdispersed) or overdispersed samples of values from any given distance matrix. 
+
+* run_sampler_geo: Generates aggregated (underdispersed) or overdispersed samples of points from any given set of geographic coordinates. 
+
+* run_sampler_phy: Generates aggregated (underdispersed) or overdispersed samples of tips from any given phylogenetic tree. 
+
+* Nee_May_1997: Generates a subsample of tips from a phylogenetic tree that maximize the remaining amount of evolutionary history for each node (see Nee and May 1997).
+
+  
+  
+## run_sampler
+  
+Phylogeny example:
+```{r, message = FALSE}
+require(sampler)
+require(ape)
+```
+
+```{r, , fig.width=6, fig.height=6}
+## Generate a random tree
+tree <- rcoal(10)
+## Calculate the distance
+dist <- cophenetic(tree)
+## Highly overdispersed 50% resample design (alpha = 50)
+selection <- run_sampler(x = dist, n = 5, alpha = 50, starting = "t10")
+## Highly aggregated 50% resample design (alpha = -50)
+selection2 <- run_sampler(x = dist, n = 5, alpha = -50, starting = "t10")
+## Random 50% resample design (alpha = 0)
+selection3 <- run_sampler(x = dist, n = 5, alpha = 0, starting = "t10")
+## Plot to compare
+
+plot(tree,tip.color=ifelse(tree$tip.label %in% selection, "red","black"),
+     main = "Overdispersed 50% sampling (red were selected)", cex = 1)
+axis(1)
+plot(tree,tip.color=ifelse(tree$tip.label %in% selection2, "blue","black"),
+     main = "Aggregated 50% sampling (blue were selected)", cex = 1)
+axis(1)
+plot(tree,tip.color=ifelse(tree$tip.label %in% selection3, "green","black"),
+     main = "Random 50% sampling (green were selected)", cex = 1)
+axis(1)
+```
+
+Geography example:
+```{r, message = FALSE}
+require(sp)
+require(maptools)
+require(fields)
+```
+
+```{r, fig.width=6, fig.height=6}
+data(wrld_simpl)  # World map
+Brazil <- wrld_simpl[wrld_simpl$NAME == "Brazil", ]  # Brazil (polygon)
+coords <- slot(spsample(Brazil, 100, "regular"), "coords")
+rownames(coords) <- paste0("t", 1:nrow(coords))
+## Calculate the geographic distance
+dist.geo <- rdist.earth(coords)
+## Subsample 50%
+### Overdispersed
+selection.geo <- run_sampler(x = dist.geo, n = 25, alpha = 100, starting = "t10")
+### Aggregated
+selection.geo2 <- run_sampler(x = dist.geo, n = 25, alpha = -100, starting = "t10")
+### Random
+selection.geo3 <- run_sampler(x = dist.geo, n = 25, alpha = 0, starting = "t10")
+
+## Plot
+plot(Brazil, main = "Overdispersed 50% sampling (red were selected)")
+points(coords, cex = 2, pch = 19,
+       col = ifelse(rownames(coords) %in% selection.geo, "red","gray"))
+plot(Brazil, main = "Aggregated 50% sampling (blue were selected)")
+points(coords, cex = 2, pch = 19,
+       col = ifelse(rownames(coords) %in% selection.geo2, "blue","gray"))
+plot(Brazil, main = "Random 50% sampling (green were selected)")
+points(coords, cex = 2, pch = 19,
+       col = ifelse(rownames(coords) %in% selection.geo3, "green","gray"))
+```
+
+Trait example:
+```{r, fig.width=6, fig.height=6}
+## Fake body size
+set.seed <- 1
+body_size <- runif(1000)
+# Biased sample towards large species
+set.seed <- 1
+body_size_bias <- sample(body_size, 500, prob = body_size)
+hist(body_size, main = "Species body size distribution\n(n = 1000)",  xlab = "Body size")
+hist(body_size_bias, main = "Biased samplig towards larger species\n(n = 500)",
+xlab = "Body size")
+# Use sampler to reduce the bias
+dist_bs <- as.matrix(dist(body_size_bias))
+rownames(dist_bs) <- colnames(dist_bs) <- 1:length(body_size_bias)
+selection.bs <- run_sampler(x = dist_bs, n = 100, alpha = 100)
+hist(body_size_bias[as.numeric(selection.bs)],
+ main = "Overdispersed sampling of biased information \n(n = 100)",
+ xlab = "Body size")
+```
+
+## run_sampler_geo
+```{r, message= FALSE}
+require(sp)
+require(maptools)
+```
+
+```{r, fig.width=6, fig.height=6}
+data(wrld_simpl)  # World map
+Brazil <- wrld_simpl[wrld_simpl$NAME == "Brazil", ]  # Brazil (polygon)
+coords <- slot(spsample(Brazil, 100, "regular"), "coords")
+rownames(coords) <- paste0("t", 1:nrow(coords))
+## Subsample 50%
+### Overdispersed
+selection.geo <- run_sampler_geo(x = coords, n = 10, alpha = 100, starting = "t10")
+### Aggregated
+selection.geo2 <- run_sampler_geo(x = coords, n = 10, alpha = -100, starting = "t10")
+### Random
+selection.geo3 <- run_sampler_geo(x = coords, n = 10, alpha = 0, starting = "t10")
+
+## Plot
+plot(Brazil, main = "Overdispersed 50% sampling (red were selected)")
+points(selection.geo, cex = 2, pch = 19, col = "red")
+plot(Brazil, main = "Aggregated 50% sampling (blue were selected)")
+points(selection.geo2, cex = 2, pch = 19, col = "blue")
+plot(Brazil, main = "Random 50% sampling (green were selected)")
+points(selection.geo3, cex = 2, pch = 19, col = "green")
+```
+
+## run_sampler_phy
+
+```{r, message = FALSE}
+require(ape)
+```
+
+```{r, fig.width=6, fig.height=6}
+# Generate a random tree
+set.seed(100)
+tree <- rcoal(10)
+set.seed(2)
+# Highly overdispersed 50% resample design (alpha = 100)
+overdispersed <- run_sampler_phy(tree, 5, alpha = 100, starting = "t10")
+# Highly aggregated 50% resample design (alpha = -100)
+aggregated <- run_sampler_phy(tree, 5, alpha = -100, starting = "t10")
+# Random 50% resample design (alpha = 0)
+random <- run_sampler_phy(tree, 5, alpha = 0, starting = "t10")
+# Plot to compare
+par(mfrow = c(2, 2))
+plot(tree, main = "Full tree", cex = 1)
+axis(1)
+plot(overdispersed, main = "Overdispersed 50% sampling", cex = 1)
+axis(1)
+plot(aggregated, main = "Aggregated 50% sampling", cex = 1)
+axis(1)
+plot(random, main = "Random 50% sampling", cex = 1)
+axis(1)
+```
+
+## Nee_May_1997
+
+```{r, message = FALSE}
+require(ape)
+```
+
+```{r, fig.width=6, fig.height=6}
+set.seed(50)
+tree <- rcoal(50)
+k = 10
+plot(tree, main = paste("Original tree \n n =", Ntip(tree)))
+plot(Nee_May_1997(tree, k), main = paste("Tree with phylogenetic history maximized
+n =",  k,  "(Nee & May 1997)"))
+
+# Compare the sampler algorithm with Nee and May (1997) method:
+PD_ob <- sum(Nee_May_1997(tree, k)$edge.length)
+n_a = 20
+alphas <- seq(-5, 5, length.out = n_a)
+rep = 100
+PD <- matrix(ncol = n_a, nrow = rep)
+for (j in 1:rep) {
+ for (i in 1:n_a) {
+ PD[j, i] <- sum(run_sampler_phy(tree, k, alpha = alphas[i], starting = "t10")$edge.length)
+ }
+}
+PD_max <- apply(PD, 2, max)
+PD_min <- apply(PD, 2, min)
+PD_mean <- apply(PD, 2, mean)
+
+plot(alphas, PD_mean, ylab = "Phylogenetic Diveristy",
+ ylim = c(min(PD), max(c(PD, PD_ob))), type = "l", lwd = 2, col = "black")
+ lines(alphas, PD_max, lty = 2, col = "gray20")
+ lines(alphas, PD_min, lty = 2, col = "gray20")
+ points(max(alphas) + max(alphas) *.05, PD_ob, col = "red", pch = 18, cex = 2)
+ legend(x = max(alphas) - max(alphas) * .90, y = min(PD) + min(PD) * 2,
+       legend = c("Sampler (mean)", "Sampler (min and max)", "Nee & May"),
+       pch = c(NA, NA, 18), lty = c(1, 2, NA),
+       col = c("black", "gray20","red"))
+
+```
+
