@@ -38,18 +38,8 @@ for any given coordinates. Results can
 be used to design experiments/samples, for resample proposes and data bias removal.
 }
 \details{
-\code{run_sampler} resample \code{n} sample units with an attraction
-or repulsive effect determined by \code{alpha} and given a distance matrix
-(\code{x}). The algorithim begins selecting one random starting point \code{i}.
-The following sample unit is then selected based on the a probability given
-by the distance of \code{i} to each remaing units raised to the power of
-\code{alpha} (pr(j | i) = dij ^ alpha). The following selections will then use
-the average distance of the remaing units to the selected ones. The procedure
-is repeated until the selected points reach \code{n}. Positive values of
-\code{alpha} generate overdispersed sample designs, as sample units disntant from
-the selected unit(s) will have a higher probability of being selected. Inverselly,
-negative values will generate an aggregated design. Note that as \code{alpha}
-approximate the infinity (+ or -), the sample design becomes more deterministic.
+The function uses the algorithm in \link{run_sampler},
+ but here it accepts a two column matrix of coordinates as input.
 }
 \examples{
 require(sp)
@@ -74,6 +64,9 @@ plot(Brazil, main = "Aggregated 50\% sampling (blue were selected)")
 points(selection.geo2, cex = 2, pch = 19, col = "blue")
 plot(Brazil, main = "Random 50\% sampling (green were selected)")
 points(selection.geo3, cex = 2, pch = 19, col = "green")
+}
+\seealso{
+\code{\link{run_sampler}}
 }
 \author{
 Bruno Vilela

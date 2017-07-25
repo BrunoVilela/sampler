@@ -38,18 +38,8 @@ for any given phylogenetic tree (class phylo). Results can
 be used to design experiments/samples, for resample proposes and data bias removal.
 }
 \details{
-\code{run_sampler} resample \code{n} sample tips with an attraction
-or repulsive effect determined by \code{alpha} (\code{x}).
-The algorithim begins selecting one random starting tip \code{i}.
-The following tip is then selected based on the a probability given
-by the distance of \code{i} to each remaing tip raised to the power of
-\code{alpha} (pr(j | i) = dij ^ alpha). The following selections will then use
-the average distance of the remaing tips to the selected ones. The procedure
-is repeated until the selected tips reach \code{n}. Positive values of
-\code{alpha} generate overdispersed sample designs, as tips within higher distant from
-the selected tip(s) will have a higher probability of being selected. Inverselly,
-negative values will generate an aggregated design. Note that as \code{alpha}
-approximate the infinity (+ or -), the sample design becomes more deterministic.
+The function uses the algorithm in \link{run_sampler},
+ but here it accepts a phylo object as input.
 }
 \examples{
 # Generate a random tree
@@ -73,6 +63,11 @@ plot(aggregated, main = "Aggregated 50\% sampling", cex = 1)
 axis(1)
 plot(random, main = "Random 50\% sampling", cex = 1)
 axis(1)
+}
+\seealso{
+\code{\link{run_sampler}}
+
+\code{\link{Nee_May_1997}}
 }
 \author{
 Bruno Vilela

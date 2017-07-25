@@ -2,7 +2,7 @@ Package: sampler
 Type: Package
 Title: Aggregated and overdispersed sampling
 Version: 0.1.0
-Author: Bruno Vilela
+Author: Bruno Vilela, Ty Tuff, Trevor Fristoe, Edric Gavin, Lucas Jardim, Sara Varela & Carlos Botero.
 Maintainer: Bruno Vilela <bvilela@wustl.edu>
 Description: Generate aggregated or overdispersed sampling designs for any given phylogenetic tree, spatial points or distance matrix. Results can be used to design experiments/samples, for resample proposes and data bias removal.
 License: GPL-2
@@ -22,3 +22,5 @@ Depends:
     R (>= 3.4),
 LazyData: true
 RoxygenNote: 6.0.1
+URL: https://github.com/BrunoVilela/sampler
+BugReports: https://github.com/BrunoVilela/sampler

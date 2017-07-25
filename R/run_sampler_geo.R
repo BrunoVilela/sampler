@@ -18,18 +18,8 @@
 #' @param starting Character vector indicating the starting point (= to row names).
 #' If not provided, random starting value(s) is(are) selected.
 #'
-#' @details \code{run_sampler} resample \code{n} sample units with an attraction
-#' or repulsive effect determined by \code{alpha} and given a distance matrix
-#' (\code{x}). The algorithim begins selecting one random starting point \code{i}.
-#' The following sample unit is then selected based on the a probability given
-#' by the distance of \code{i} to each remaing units raised to the power of
-#' \code{alpha} (pr(j | i) = dij ^ alpha). The following selections will then use
-#' the average distance of the remaing units to the selected ones. The procedure
-#' is repeated until the selected points reach \code{n}. Positive values of
-#' \code{alpha} generate overdispersed sample designs, as sample units disntant from
-#' the selected unit(s) will have a higher probability of being selected. Inverselly,
-#' negative values will generate an aggregated design. Note that as \code{alpha}
-#' approximate the infinity (+ or -), the sample design becomes more deterministic.
+#' @details The function uses the algorithm in \link{run_sampler},
+#'  but here it accepts a two column matrix of coordinates as input.
 #'
 #'
 #' @return The function returns a vector indicating the selected rows.
@@ -37,6 +27,7 @@
 #' Sampling_selection - selected sampling units - and
 #' Starting_points - selected starting point(s).
 #'
+#' @seealso \code{\link{run_sampler}}
 #'
 #' @examples
 #' require(sp)

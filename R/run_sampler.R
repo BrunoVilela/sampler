@@ -4,7 +4,7 @@
 #'
 #' @description Generate aggregated or overdispersed sampling designs
 #' for any given distance matrix (class matrix). Results can
-#' be used to design experiments/samples, for resample proposes and data bias removal
+#' be used to design experiments/samples, for resample proposes and data bias removal.
 #'
 #' @param x \code{matrix} indicating the distance (any unit) between sample units.
 #' Row and column names should be given.
@@ -17,14 +17,19 @@
 #' random starting value(s) is(are) selected.
 #'
 #'
-#' @details \code{run_sampler} resample \code{n} sample units with an attraction
-#' or repulsive effect determined by \code{alpha} and given a distance matrix
-#' (\code{x}). The algorithim begins selecting one random starting point \code{i}.
-#' The following sample unit is then selected based on the a probability given
+#' @details Given a distance matrix (\code{x}), \code{run_sampler} resample \code{n}
+#' sample units with an attraction (positive) or repulsive (negative)
+#' effect determined by \code{alpha}(\eqn{\alpha}).
+#' The algorithim begins selecting one random starting point \code{i}.
+#' The following sample unit is then selected based on the probability given
 #' by the distance of \code{i} to each remaing units raised to the power of
-#' \code{alpha} (pr(j | i) = dij ^ alpha). The following selections will then use
-#' the average distance of the remaing units to the selected ones. The procedure
-#' is repeated until the selected points reach \code{n}. Positive values of
+#' \code{alpha}  (\eqn{pr(j | i) = d_{i,j} ^ \alpha}). The following selections will then use a joint
+#' probability. The first calculated as the average distance \code{d} of the remaing unit \code{j}
+#' to the selected ones \code{k} (\eqn{pr1(j | k) = d_{k,j} ^ \alpha}).
+#' The second as the minimun distance \code{dmin} of the remaing units to the selected ones
+#' (\eqn{pr2(j | k) = dmin_{k,j} ^ \alpha}).
+#' The second probability guarantees that representativiness is achieved.
+#' The procedure is repeated until the selected points reach \code{n}. Positive values of
 #' \code{alpha} generate overdispersed sample designs, as sample units disntant from
 #' the selected unit(s) will have a higher probability of being selected. Inverselly,
 #' negative values will generate an aggregated design. Note that as \code{alpha}
@@ -36,6 +41,8 @@
 #' Sampling_selection - selected sampling units - and
 #' Starting_points - selected starting point(s).
 #'
+#' @seealso \code{\link{run_sampler_phy}}
+#' @seealso \code{\link{run_sampler_geo}}
 #'
 #' @examples
 #' # Phylogeny example:

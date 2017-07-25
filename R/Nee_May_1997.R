@@ -17,6 +17,8 @@
 #'
 #' @references Sean Nee and Robert M. May. "Extinction and the loss of evolutionary history." Science 278.5338 (1997): 692-694.
 #'
+#' @seealso \code{\link{run_sampler_phy}}
+#'
 #' @examples
 #' require(ape)
 #' set.seed(50)
