@@ -73,10 +73,9 @@ run_sampler_phy <- function (x, n, alpha, dist.func = cophenetic,
   }
   tree <- x
   x <- dist.func(tree)
-  if(!all(tree$tip.label %in% rownames(x))) {
-    stop("dist.func provided do not result in a distance matrix
-         with names corresponding to the tree tip labels.")
-  }
+
+  .error_control2(x, tree$tip.label)
+
   selected <- run_sampler(x, n, alpha, n_start, return_start,
                           starting)
   if (return_start) {
@@ -88,4 +87,23 @@ run_sampler_phy <- function (x, n, alpha, dist.func = cophenetic,
   }
 }
 
-
+.error_control2 <- function(x, labels) {
+  if (!is.matrix(x)) {
+    stop("dist.func provided do not result in a a matrix.")
+  }
+  if (nrow(x) != ncol(x)) {
+    stop("dist.func provided do not result in a a symmetric distance matrix.")
+  }
+  if (is.null(colnames(x)) | is.null(rownames(x))) {
+    stop("dist.func provided do not result in a matrix with
+         both columns and rows named.")
+  }
+  if (any(duplicated(rownames(x)))) {
+    stop("dist.func provided resulted in
+         a matrix with duplicated names.")
+  }
+  if(!all(labels %in% rownames(x))) {
+    stop("dist.func provided do not result in a distance matrix
+         with names corresponding to x labels.")
+  }
+}

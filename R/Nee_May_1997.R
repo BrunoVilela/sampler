@@ -57,8 +57,13 @@ Nee_May_1997 <- function(x, n) {
   if (class(x) != 'phylo') {
     stop("x must be a phylogeny of class phylo")
   }
-
-  if (!is.numeric(n) | length(n) > 1 | n < 2 | n > Ntip(x) | n != round(n)) {
+  if (!is.numeric(n)) {
+    stop("n must be a positive integer")
+  }
+  if (length(n) > 1) {
+    stop("n must be a positive integer of length one")
+  }
+  if (n < 2 | n > Ntip(x) | n != round(n)) {
     stop("n must be a positive integer of length one, bigger than 2,
          and smaller than the number of tips in the tree")
   }

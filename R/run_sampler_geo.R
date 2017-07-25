@@ -75,10 +75,8 @@ run_sampler_geo <- function (x, n, alpha, dist.func = rdist.earth,
   }
   coords <- x
   x <- dist.func(coords)
-  if(!all(rownames(coords) %in% rownames(x))) {
-    stop("dist.func provided do not result in a distance matrix
-           with names corresponding to the tree tip labels.")
-  }
+  .error_control2(x, rownames(coords))
+
   selected <- run_sampler(x, n, alpha, n_start, return_start,
                           starting)
   if (return_start) {
