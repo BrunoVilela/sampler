@@ -9,7 +9,7 @@
 #' @param x \code{matrix} or \code{data.frame} indicating the coordinates
 #' (first column = longitude; second column = latitude). Row names should be given.
 #' @param n A positive integer number indicating the sample size.
-#' @param alpha Number indicating the strenght of aggregation (if negative) or
+#' @param alpha Number indicating the strength of aggregation (if negative) or
 #' overdispersion (if positive). When alpha = 0 sample is random.
 #' @param dist.func A distance function to calculate coordinates distance.
 #' Default is \code{fields::rdist.earth}.
@@ -27,6 +27,7 @@
 #' Sampling_selection - selected sampling units - and
 #' Starting_points - selected starting point(s).
 #'
+
 #' @seealso \code{\link{run_sampler}}
 #'
 #' @examples

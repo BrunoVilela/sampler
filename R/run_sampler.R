@@ -2,14 +2,13 @@
 #'
 #' @author Bruno Vilela
 #'
-#' @description Generate aggregated or overdispersed sampling designs
-#' for any given distance matrix (class matrix). Results can
-#' be used to design experiments/samples, for resample proposes and data bias removal.
+#' @description Generates aggregated (underdispersed) or overdispersed samples
+#' of values from any given distance matrix (class matrix).
 #'
 #' @param x \code{matrix} indicating the distance (any unit) between sample units.
 #' Row and column names should be given.
 #' @param n A positive integer number indicating the sample size.
-#' @param alpha Number indicating the strenght of aggregation (if negative) or
+#' @param alpha Number indicating the strength of aggregation (if negative) or
 #' overdispersion (if positive). When alpha = 0 sample is random.
 #' @param n_start Number of initial selected points. Default is one starting point.
 #' @param return_start if \code{TRUE} the starting point is returned.
@@ -20,18 +19,18 @@
 #' @details Given a distance matrix (\code{x}), \code{run_sampler} resample \code{n}
 #' sample units with an attraction (positive) or repulsive (negative)
 #' effect determined by \code{alpha}(\eqn{\alpha}).
-#' The algorithim begins selecting one random starting point \code{i}.
+#' The algorithm begins selecting one random starting point \code{i}.
 #' The following sample unit is then selected based on the probability given
-#' by the distance of \code{i} to each remaing units raised to the power of
+#' by the distance of \code{i} to each remaining units raised to the power of
 #' \code{alpha}  (\eqn{pr(j | i) = d_{i,j} ^ \alpha}). The following selections will then use a joint
-#' probability. The first calculated as the average distance \code{d} of the remaing unit \code{j}
+#' probability. The first calculated as the average distance \code{d} of the remaining unit \code{j}
 #' to the selected ones \code{k} (\eqn{pr1(j | k) = d_{k,j} ^ \alpha}).
-#' The second as the minimun distance \code{dmin} of the remaing units to the selected ones
+#' The second as the minimum distance \code{dmin} of the remaining units to the selected ones
 #' (\eqn{pr2(j | k) = dmin_{k,j} ^ \alpha}).
-#' The second probability guarantees that representativiness is achieved.
+#' The second probability guarantees that representativeness is achieved.
 #' The procedure is repeated until the selected points reach \code{n}. Positive values of
-#' \code{alpha} generate overdispersed sample designs, as sample units disntant from
-#' the selected unit(s) will have a higher probability of being selected. Inverselly,
+#' \code{alpha} generate overdispersed sample designs, as sample units distant from
+#' the selected unit(s) will have a higher probability of being selected. Inversely,
 #' negative values will generate an aggregated design. Note that as \code{alpha}
 #' approximate the infinity (+ or -), the sample design becomes more deterministic.
 #'

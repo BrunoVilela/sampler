@@ -10,10 +10,10 @@
 #'
 #'
 #' @details The algorithm selects n - 1 oldest nodes, defining n clades. One species
-#' from each clade is randonly selected (Nee and May 1997).
+#' from each clade is randomly selected (Nee and May 1997).
 #'
 #'
-#' @return A prunned phylogenetic tree.
+#' @return A pruned phylogenetic tree.
 #'
 #' @references Sean Nee and Robert M. May. "Extinction and the loss of evolutionary history." Science 278.5338 (1997): 692-694.
 #'
