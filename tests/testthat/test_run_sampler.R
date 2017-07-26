@@ -58,5 +58,12 @@ test_that("test run_sampler errors", {
   expect_error(run_sampler(x = dist2, n = n, alpha = c(2, 3)))
   expect_error(run_sampler(x = dist2, n = n, alpha = 0, n_start = 1002))
   expect_error(run_sampler(x = dist2, n = n, alpha = 0, n_start = 2.2))
+  dist3 <- dist2
+  dist3[1, 1] <- NA
+  expect_error(run_sampler(x = dist3, n = n, alpha = 0, n_start = 2))
+  dist3[1, 1] <- Inf
+  expect_error(run_sampler(x = dist3, n = n, alpha = 0, n_start = 2))
+  dist3[1, 1] <- -1
+  expect_error(run_sampler(x = dist3, n = n, alpha = 0, n_start = 2))
 })
 

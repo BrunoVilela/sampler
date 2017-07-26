@@ -226,6 +226,15 @@ run_sampler <- function (x, n, alpha, n_start = 1, return_start = FALSE,
   if (any(duplicated(rownames(x)))) {
     stop("duplicated names in x.")
   }
+  if (any(is.na(x))) {
+    stop("x contains NA.")
+  }
+  if (any(is.infinite(x))) {
+    stop("x contains Inf.")
+  }
+  if (any(x < 0)) {
+    stop("x contains negative numbers.")
+  }
   if (!is.numeric(n)) {
     stop("n must be a number")
   }

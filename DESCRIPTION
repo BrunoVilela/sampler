@@ -9,17 +9,17 @@ License: GPL-2
 Encoding: UTF-8
 Imports:
     fields,
-    sp,
     ape,
     phangorn,
-    picante,
-    maptools,
+    picante
 Suggests:
     testthat,
     raster,
     adephylo,
     knitr,
-    rmarkdown
+    rmarkdown,
+    sp,
+    maptools
 Depends:
     R (>= 3.4),
 LazyData: true

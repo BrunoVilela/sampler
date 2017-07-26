@@ -28,7 +28,10 @@
 #' @references Sean Nee and Robert M. May. "Extinction and the loss of evolutionary history." Science 278.5338 (1997): 692-694.
 #'
 #' @export run_sampler run_sampler_phy Nee_May_1997 run_sampler_geo
-#' @import ape fields sp picante phangorn maptools
+#' @import ape
+#' @importFrom fields rdist.earth
+#' @importFrom picante node.age
+#' @importFrom phangorn Descendants Children
 #' @importFrom stats cophenetic
 #'
 NULL
