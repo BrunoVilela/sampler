@@ -2,32 +2,34 @@
 #'
 #' @author Bruno Vilela
 #'
-#' @description Generate aggregated or overdispersed sampling designs
-#' for any given coordinates. Results can
-#' be used to design experiments/samples, for resample proposes and data bias removal.
+#' @description Generate spatially aggregated or overdispersed subsamples from
+#' any given set of coordinates. Results can be used to design sampling schemes
+#' for future research, for resampling proposes, and for removing spatial bias
+#' from data.
 #'
 #' @param x \code{matrix} or \code{data.frame} indicating the coordinates
 #' (first column = longitude; second column = latitude). Row names should be given.
-#' @param n A positive integer number indicating the sample size.
+#' @param n A positive integer number indicating the size of returned sample.
 #' @param alpha Number indicating the strength of aggregation (if negative) or
 #' overdispersion (if positive). When alpha = 0 sample is random.
+#' There are no limits to alpha, but combinations of big numbers and big
+#' distances may result in an error depending on your R configurations.
 #' @param dist.func A distance function to calculate coordinates distance.
 #' Default is \code{\link{rdist.earth}} from package \code{fields}.
-#' @param n_start Number of initial selected points. Default is one starting point.
-#' @param return_start if \code{TRUE} the starting point is returned.
-#' @param starting Character vector indicating the starting point (= to row names).
-#' If not provided, random starting value(s) is(are) selected.
+#' @param n_start Number of initial selected sample units. Default is one starting sample unit.
+#' @param return_start if \code{TRUE} the starting sample units(s) is(are) returned.
+#' @param starting Character vector indicating the starting sample unit(s)
+#' (= to row names). If not provided, starting sample unit(s) is(are) randomly
+#' selected.
 #'
-#' @details The function uses the algorithm in \code{\link{run_sampler}},
-#'  but here it accepts a two column matrix of coordinates as input.
+#' @details The function uses the algorithm in \code{\link{run_sampler}}, but
+#' accepts a two column matrix of coordinates as input.
 #'
 #'
-#' @return The function returns a vector indicating the selected rows.
-#' If return_start is TRUE, a list is returned with the first element being the
-#' Sampling_selection - selected sampling units - and
-#' Starting_points - selected starting point(s).
-#'
-
+#' @return The function returns a subset of the original matrix of coordinates.
+#' If return_start is TRUE, a list is returned with the first
+#' element being the Sampling_selection - subset matrix based on the selected
+#' sampling units - and Starting_points - selected starting point(s).
 #' @seealso \code{\link{run_sampler}}
 #'
 #' @examples

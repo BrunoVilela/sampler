@@ -2,14 +2,17 @@
 #'
 #' @author Bruno Vilela
 #'
-#' @description Generate aggregated or overdispersed sampling designs
-#' for any given phylogenetic tree (class phylo). Results can
-#' be used to design experiments/samples, for resample proposes and data bias removal.
+#' @description Generate phylogenetically aggregated or overdispersed subsamples
+#' from any given phylogenetic tree (class phylo). Results can be used to design
+#' sampling schemes for future research, for resampling proposes, and for
+#' removing phylogenetic bias from data.
 #'
 #' @param x \code{phylo} object.
 #' @param n A positive integer number indicating the sample size.
 #' @param alpha Number indicating the strength of aggregation (if negative) or
 #' overdispersion (if positive). When alpha = 0 sample is random.
+#' There are no limits to alpha, but combinations of big numbers and big
+#' distances may result in an error depending on your R configurations.
 #' @param dist.func Function to calculate the phylogenetic distance.
 #' The function should be able to receive a phylo object and return
 #' a \code{matrix} indicating the pairwise distance
@@ -17,12 +20,12 @@
 #' Default uses \code{\link{cophenetic}} from \code{ape} package.
 #' Other examples include
 #' @param n_start Number of initial selected tips. Default is one starting tip.
-#' @param return_start if \code{TRUE} the starting tip is returned.
-#' @param starting Character vector indicating the starting tips. If not provided,
-#' random starting value(s) is(are) selected.
+#' @param return_start if \code{TRUE} the tip label of the starting tip is returned.
+#' @param starting Character vector indicating tip labels of starting tip(s).
+#' If not provided, random starting tip(s) is(are) selected.
 #'
 #' @details The function uses the algorithm in \code{\link{run_sampler}},
-#'  but here it accepts a phylo object as input.
+#' but accepts a phylo object as input.
 #'
 #' @return The function returns a pruned phylogenetic tree.
 #'

@@ -3,41 +3,45 @@
 #' @author Bruno Vilela
 #'
 #' @description Generates aggregated (underdispersed) or overdispersed samples
-#' of values from any given distance matrix (class matrix).
+#' of row names from any given distance matrix.
 #'
 #' @param x \code{matrix} indicating the distance (any unit) between sample units.
 #' Row and column names should be given.
-#' @param n A positive integer number indicating the sample size.
+#' @param n A positive integer number indicating the size of returned sample.
 #' @param alpha Number indicating the strength of aggregation (if negative) or
 #' overdispersion (if positive). When alpha = 0 sample is random.
-#' @param n_start Number of initial selected points. Default is one starting point.
-#' @param return_start if \code{TRUE} the starting point is returned.
-#' @param starting Character vector indicating the starting point. If not provided
-#' random starting value(s) is(are) selected.
+#' There are no limits to alpha, but combinations of big numbers and big
+#' distances may result in an error depending on your R configurations.
+#' @param n_start Number of initial selected sample units. Default is one starting sample unit.
+#' @param return_start if \code{TRUE} the starting sample unit(s) is(are) returned.
+#' @param starting Character vector indicating the row name of the starting
+#' sample unit. If not provided starting sample unit(s) is(are) randomly selected.
 #'
 #'
-#' @details Given a distance matrix (\code{x}), \code{run_sampler} resample \code{n}
+#' @details Given a distance matrix (\code{x}), \code{run_sampler} resamples \code{n}
 #' sample units with an attraction (positive) or repulsive (negative)
 #' effect determined by \code{alpha}(\eqn{\alpha}).
-#' The algorithm begins selecting one random starting point \code{i}.
+#' The algorithm begins selecting one random starting sample unit \code{i}.
 #' The following sample unit is then selected based on the probability given
 #' by the distance of \code{i} to each remaining units raised to the power of
-#' \code{alpha}  (\eqn{pr(j | i) = d_{i,j} ^ \alpha}). The following selections will then use a joint
-#' probability. The first calculated as the average distance \code{d} of the remaining unit \code{j}
-#' to the selected ones \code{k} (\eqn{pr1(j | k) = d_{k,j} ^ \alpha}).
-#' The second as the minimum distance \code{dmin} of the remaining units to the selected ones
-#' (\eqn{pr2(j | k) = dmin_{k,j} ^ \alpha}).
-#' The second probability guarantees that representativeness is achieved.
-#' The procedure is repeated until the selected points reach \code{n}. Positive values of
-#' \code{alpha} generate overdispersed sample designs, as sample units distant from
-#' the selected unit(s) will have a higher probability of being selected. Inversely,
-#' negative values will generate an aggregated design. Note that as \code{alpha}
-#' approximate the infinity (+ or -), the sample design becomes more deterministic.
+#' \code{alpha}  (\eqn{pr(j | i) = d_{i,j} ^ \alpha}). ). Each following
+#' selection will then use a joint probability. The first is calculated as the
+#' average distance\code{d} of all remaining units \code{j} to all selected
+#' units \code{k} (\eqn{pr1(j | k) = d_{k,j} ^ \alpha}).
+#' The second as the minimum distance \code{dmin} of the remaining units to the
+#' selected units (\eqn{pr2(j | k) = dmin_{k,j} ^ \alpha}).
+#' The second probability prevents overdispersed samples from selecting only
+#' sample units located at edges. The procedure is repeated until the selected
+#' sample units reach \code{n}. Positive values of \code{alpha} generate overdispersed sample
+#' designs, as sample units distant from the selected unit(s) will have a higher
+#' probability of being selected. Inversely, negative values will generate an
+#' aggregated design. Note that as \code{alpha} approximate the infinity (+ or -), the
+#' sample design becomes more deterministic.
 #'
 #'
-#' @return The function returns a vector indicating the selected rows.
-#' If return_start is TRUE, a list is returned with the first element being the
-#' Sampling_selection - selected sampling units - and
+#' @return The function returns a vector of row names associated with selected
+#' sampling units. If return_start is \code{TRUE}, a list is returned with the first
+#' element being the Sampling_selection - selected sampling units - and
 #' Starting_points - selected starting point(s).
 #'
 #' @seealso \code{\link{run_sampler_phy}}
